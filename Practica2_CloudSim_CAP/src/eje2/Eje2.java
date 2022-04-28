@@ -82,7 +82,7 @@ public class Eje2 {
 		long anchoBanda = 1000;
 		
         List<Host> hosts = new ArrayList<Host>();
-        hosts.add( new Host(hostId, new RamProvisionerSimple(ram),new BwProvisionerSimple(anchoBanda), almacenamiento,processorElements, new VmSchedulerSpaceShared(processorElements)));
+        hosts.add( new Host(hostId, new RamProvisionerSimple(ram),new BwProvisionerSimple(anchoBanda), almacenamiento,processorElements, new VmSchedulerTimeShared(processorElements)));
         LinkedList<Storage> storageList = new LinkedList<Storage>();
 
         String arquitectura = "x86";
@@ -119,7 +119,7 @@ public class Eje2 {
 
         List<Vm> virtualMachines = new ArrayList<Vm>();
         for (int idx = 0; idx < 2; idx++) {
-            virtualMachines.add(new Vm(virtualMachines.size(), broker.getId(),200, 2, 1024, 100, 6000, "Xen", new CloudletSchedulerTimeShared()));
+            virtualMachines.add(new Vm(virtualMachines.size(), broker.getId(),200, 2, 1024, 100, 6000, "Xen", new CloudletSchedulerSpaceShared()));
         }
 
         broker.submitVmList(virtualMachines);

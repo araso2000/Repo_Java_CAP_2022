@@ -15,6 +15,8 @@ import java.util.List;
 
 public class Eje3 {
 	private int indice = 0;
+	
+	private int numUsers = 10;
 
     public Eje3(){}
 
@@ -23,18 +25,19 @@ public class Eje3 {
         this.initCloudSim();
 
         this.createDataCenter();
-
-        int numUsers=10;
-    	
-        DatacenterBroker broker = null;
-    	for(int ii=0;ii<numUsers;ii++) {
-    		broker = this.createResources();
-    	}
-
+        
+        List<DatacenterBroker> brokers = new ArrayList<DatacenterBroker>();
+        
+        for(int ii=0;ii<numUsers;ii++) {
+        	DatacenterBroker broker = this.createResources();
+        	brokers.add(broker);
+        }
+        
         this.simulate();
-
-        this.printCloudletsResults(broker);
-
+        
+        for(int ii=0;ii<numUsers;ii++) {
+        	this.printCloudletsResults(brokers.get(ii));
+        }
     }
 
     private void initCloudSim(){

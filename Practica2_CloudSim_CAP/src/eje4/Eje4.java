@@ -96,7 +96,7 @@ public class Eje4 {
     		long anchoBanda = 10000;
     		
     		
-            hosts.add(new Host((hosts.size()), new RamProvisionerSimple(ram),new BwProvisionerSimple(anchoBanda), almacenamiento,processorElements, new VmSchedulerSpaceShared(processorElements)));
+            hosts.add(new Host((hosts.size()), new RamProvisionerSimple(ram),new BwProvisionerSimple(anchoBanda), almacenamiento,processorElements, new VmSchedulerTimeShared(processorElements)));
         }
         
         LinkedList<Storage> storageList = new LinkedList<Storage>();
@@ -116,7 +116,7 @@ public class Eje4 {
 		
         try {
             datacenter = new Datacenter(nombre, characteristics,
-                    new VmAllocationPolicyRandom(hosts),
+                    new VmAllocationPolicySimple(hosts),
                     storageList, 0);
         } catch (Exception e) {
             e.printStackTrace();

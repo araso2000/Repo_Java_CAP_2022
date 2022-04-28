@@ -6,6 +6,9 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/araso/Documents/EclipseJAVA/Projects/Practica2_CloudSim_CAP/cloudsim-3.0.3/jars/cloudsim-3.0.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/araso/Desktop/Repositorios/Repo_Java_CAP_2022/Practica2_CloudSim_CAP/cloudsim-3.0.3/jars/cloudsim-3.0.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/araso/Desktop/Repositorios/Repo_Java_CAP_2022/Practica2_CloudSim_CAP/cloudsim-3.0.3/jars/cloudsim-3.0.3-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/araso/Desktop/Repositorios/Repo_Java_CAP_2022/Practica2_CloudSim_CAP/cloudsim-3.0.3/jars/cloudsim-examples-3.0.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/araso/Desktop/Repositorios/Repo_Java_CAP_2022/Practica2_CloudSim_CAP/cloudsim-3.0.3/jars/cloudsim-examples-3.0.3-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

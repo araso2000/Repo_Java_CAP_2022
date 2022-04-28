@@ -94,7 +94,7 @@ public class Eje5 {
     		long anchoBanda = 10000;
     		
     		
-            hosts.add(new Host((hosts.size()), new RamProvisionerSimple(ram),new BwProvisionerSimple(anchoBanda), almacenamiento,processorElements, new VmSchedulerSpaceShared(processorElements)));
+            hosts.add(new Host((hosts.size()), new RamProvisionerSimple(ram),new BwProvisionerSimple(anchoBanda), almacenamiento,processorElements, new VmSchedulerTimeShared(processorElements)));
         }
         
         LinkedList<Storage> storageList = new LinkedList<Storage>();
