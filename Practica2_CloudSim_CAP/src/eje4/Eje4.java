@@ -75,12 +75,13 @@ public class Eje4 {
     private void createDataCenter(){
     	List<Host> hosts = new ArrayList<Host>();
     	
+    	//Creamos 3 hosts
         for(int ii=0;ii<3;ii++) {
         	List<Pe> processorElements = new ArrayList<Pe>();
             int mips = 1200;
             
             int num = 1;
-            
+            //Si es el host 1 crearemos 4 procesadores, si no, solo 1
             if(ii==1) {
             	num=4;
             }else {
@@ -95,8 +96,9 @@ public class Eje4 {
     		long almacenamiento = 1000000;
     		long anchoBanda = 10000;
     		
-    		
-            hosts.add(new Host((hosts.size()), new RamProvisionerSimple(ram),new BwProvisionerSimple(anchoBanda), almacenamiento,processorElements, new VmSchedulerTimeShared(processorElements)));
+    		//Creamos los hosts con la configuracion requerida, ya sea el host con 4 o con 1 procesador
+            hosts.add(new Host((hosts.size()), new RamProvisionerSimple(ram),new BwProvisionerSimple(anchoBanda),
+            		almacenamiento,processorElements, new VmSchedulerTimeShared(processorElements)));
         }
         
         LinkedList<Storage> storageList = new LinkedList<Storage>();
@@ -111,7 +113,9 @@ public class Eje4 {
 		double costePorAlm = 0.003;
 		double costePorBw = 0.002;
 		
-		DatacenterCharacteristics characteristics = new DatacenterCharacteristics(arquitectura,so, vmm, hosts, zonaHoraria, costePorSeg,costePorMem, costePorAlm, costePorBw);
+		//Creamos el datacenter
+		DatacenterCharacteristics characteristics = new DatacenterCharacteristics(arquitectura,so, vmm, hosts,
+				zonaHoraria, costePorSeg,costePorMem, costePorAlm, costePorBw);
 		Datacenter datacenter = null;
 		
         try {

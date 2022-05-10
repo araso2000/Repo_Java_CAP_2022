@@ -26,9 +26,9 @@ public class Eje6 {
 
         this.createDataCenter();
         
-        DatacenterBroker broker1 = this.createResources(1);
-        DatacenterBroker broker2 = this.createResources(2);
         DatacenterBroker broker3 = this.createResources(3);
+        DatacenterBroker broker2 = this.createResources(2);
+        DatacenterBroker broker1 = this.createResources(1);
         
         this.simulate();
         
@@ -78,6 +78,7 @@ public class Eje6 {
     }
 
     private void createDataCenter(){
+    	//Creamos los distintos tipos de procesadores
         List<Pe> processorElements_1 = new ArrayList<Pe>();
         int mips_1 = 2000;
         for(int ii=0;ii<2;ii++) {
@@ -98,13 +99,17 @@ public class Eje6 {
 		long almacenamiento_2 = 2000000;
 		long anchoBanda_2 = 10000;
 		
+		//Creamos los 16 host de tipo 1
         List<Host> hosts = new ArrayList<Host>();
         for(int ii=0;ii<16;ii++) {
-        	hosts.add(new Host((hosts.size()), new RamProvisionerSimple(ram_1),new BwProvisionerSimple(anchoBanda_1), almacenamiento_1,processorElements_1, new VmSchedulerSpaceShared(processorElements_1)));
+        	hosts.add(new Host((hosts.size()), new RamProvisionerSimple(ram_1),new BwProvisionerSimple(anchoBanda_1),
+        			almacenamiento_1,processorElements_1, new VmSchedulerSpaceShared(processorElements_1)));
         }
         
+        //Creamos los 4 host de tipo 2
         for(int ii=0;ii<4;ii++) {
-        	hosts.add(new Host((hosts.size()), new RamProvisionerSimple(ram_2),new BwProvisionerSimple(anchoBanda_2), almacenamiento_2,processorElements_2, new VmSchedulerSpaceShared(processorElements_2)));
+        	hosts.add(new Host((hosts.size()), new RamProvisionerSimple(ram_2),new BwProvisionerSimple(anchoBanda_2),
+        			almacenamiento_2,processorElements_2, new VmSchedulerSpaceShared(processorElements_2)));
         }
         
         LinkedList<Storage> storageList = new LinkedList<Storage>();
@@ -140,25 +145,28 @@ public class Eje6 {
             ex.printStackTrace();
             Log.printLine(">> ERROR creating broker");
         }
-    	
+    	//Si usuario=1 crear 8 maquinas tipo A
     	if(index==1) {
     		List<Vm> virtualMachines_A = new ArrayList<Vm>();
             for (int jj = 0; jj < 8; jj++) {
-            	virtualMachines_A.add(new Vm((virtualMachines_A.size()), broker.getId(),2400, 1, 3072, 1000, 120000, "Xen", new CloudletSchedulerSpaceShared()));
+            	virtualMachines_A.add(new Vm((virtualMachines_A.size()), broker.getId(),2400, 1,
+            			3072, 1000, 120000, "Xen", new CloudletSchedulerSpaceShared()));
             }
                 
             broker.submitVmList(virtualMachines_A);
-    	}else if(index==2) {
+    	}else if(index==2) {//Si usuario=2 crear 16 maquinas tipo B
     		List<Vm> virtualMachines_B = new ArrayList<Vm>();
             for (int jj = 0; jj < 16; jj++) {
-            	virtualMachines_B.add(new Vm((virtualMachines_B.size()), broker.getId(),2000, 1, 2048, 1000, 80000, "Xen", new CloudletSchedulerSpaceShared()));
+            	virtualMachines_B.add(new Vm((virtualMachines_B.size()), broker.getId(),2000, 1,
+            			2048, 1000, 80000, "Xen", new CloudletSchedulerSpaceShared()));
             }
                 
             broker.submitVmList(virtualMachines_B);
-    	}else {
+    	}else {//Si usuario=3 crear 24 maquinas tipo C
     		List<Vm> virtualMachines_C = new ArrayList<Vm>();
             for (int jj = 0; jj < 24; jj++) {
-            	virtualMachines_C.add(new Vm((virtualMachines_C.size()), broker.getId(),1800, 1, 1024, 1000, 60000, "Xen", new CloudletSchedulerSpaceShared()));
+            	virtualMachines_C.add(new Vm((virtualMachines_C.size()), broker.getId(),1800, 1,
+            			1024, 1000, 60000, "Xen", new CloudletSchedulerSpaceShared()));
             }
                 
             broker.submitVmList(virtualMachines_C);

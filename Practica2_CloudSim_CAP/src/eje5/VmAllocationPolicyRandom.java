@@ -25,13 +25,12 @@ public class VmAllocationPolicyRandom extends VmAllocationPolicySimple {
 		for (Integer freePes : getFreePes()) {
 			freePesTmp.add(freePes);
 		}
-		if (!getVmTable().containsKey(vm.getUid())) { // if this vm was not created
-			do {// we still trying until we find a host or until we try all of them
-				
+		if (!getVmTable().containsKey(vm.getUid())) {
+			do {
+				//Creamos una lista que almacene los host ya visitados y que no pudieron alojar la VM
 				List<Integer> yaVisitados = new ArrayList<Integer>();
-				
 				int idx=0;
-				
+				//Dentro del bucle, buscar de manera RANDOM un host que no haya sido ya visitado
 				do {
 					idx = random.nextInt(3);
 				}while(yaVisitados.contains(idx));				
@@ -39,7 +38,9 @@ public class VmAllocationPolicyRandom extends VmAllocationPolicySimple {
 				Host host = getHostList().get(idx);
 				result = host.vmCreate(vm);
 				
-				if (result) { // if vm were succesfully created in the host
+				//Si el host elegido alojar a la VM, el bucle terminará. Si no, será añadido a la lista de
+				//ya visitados
+				if (result) {
 					getVmTable().put(vm.getUid(), host);
 					getUsedPes().put(vm.getUid(), requiredPes);
 					getFreePes().set(idx, getFreePes().get(idx) - requiredPes);

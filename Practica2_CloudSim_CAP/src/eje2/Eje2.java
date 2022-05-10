@@ -71,20 +71,25 @@ public class Eje2 {
     }
 
     private void createDataCenter(){
+    	//Creamos los procesadores pedidos
         List<Pe> processorElements = new ArrayList<Pe>();
         int mips = 500;
         processorElements.add(new Pe(0, new PeProvisionerSimple(mips)));
         processorElements.add(new Pe(1, new PeProvisionerSimple(mips)));
-
+        
+        //Definimos en variables las distintas configuraciones que nuestros Host pueden tener
         int hostId = 0;
 		int ram = 4096;
 		long almacenamiento = 20000;
 		long anchoBanda = 1000;
 		
+		//Creamos el host asignandole los procesadores requeridos más las variables anteriores
         List<Host> hosts = new ArrayList<Host>();
-        hosts.add( new Host(hostId, new RamProvisionerSimple(ram),new BwProvisionerSimple(anchoBanda), almacenamiento,processorElements, new VmSchedulerTimeShared(processorElements)));
+        hosts.add( new Host(hostId, new RamProvisionerSimple(ram),new BwProvisionerSimple(anchoBanda), 
+        		almacenamiento,processorElements, new VmSchedulerTimeShared(processorElements)));
         LinkedList<Storage> storageList = new LinkedList<Storage>();
 
+        //Definimos los parámetros generales de coste y configuracion del Datacenter
         String arquitectura = "x86";
 		String so = "Linux";
 		String vmm = "Xen";
@@ -95,7 +100,9 @@ public class Eje2 {
 		double costePorAlm = 0.003;
 		double costePorBw = 0.005;
 		
-		DatacenterCharacteristics characteristics = new DatacenterCharacteristics(arquitectura,so, vmm, hosts, zonaHoraria, costePorSeg,costePorMem, costePorAlm, costePorBw);
+		//Creamos el Datacenter y asignamos los hosts y caracteristicas que este requiera
+		DatacenterCharacteristics characteristics = new DatacenterCharacteristics(arquitectura,so, vmm, 
+				hosts, zonaHoraria, costePorSeg,costePorMem, costePorAlm, costePorBw);
 		Datacenter datacenter = null;
 		
         try {
@@ -107,6 +114,9 @@ public class Eje2 {
             Log.printLine(">> ERROR creating datacenter");
         }
     }
+    
+    
+    
 
     private DatacenterBroker createResources() {
         DatacenterBroker broker = null;
@@ -117,19 +127,24 @@ public class Eje2 {
             Log.printLine(">> ERROR creating broker");
         }
 
+        //Creamos las máquinas virtuales
         List<Vm> virtualMachines = new ArrayList<Vm>();
         for (int idx = 0; idx < 2; idx++) {
-            virtualMachines.add(new Vm(virtualMachines.size(), broker.getId(),200, 2, 1024, 100, 6000, "Xen", new CloudletSchedulerSpaceShared()));
+            virtualMachines.add(new Vm(virtualMachines.size(), broker.getId(),200, 
+            		2, 1024, 100, 6000, "Xen", new CloudletSchedulerSpaceShared()));
         }
 
+        //Las añadimos al broker asignado
         broker.submitVmList(virtualMachines);
 
         List<Cloudlet> cloudlets = new ArrayList<Cloudlet>();
 
         UtilizationModel utilizationModel = new UtilizationModelFull();
         
+        //Creamos las tareas a ejecutar por las VM's
         for(int ii=0;ii<12;ii++) {
-        	Cloudlet temp = new Cloudlet(cloudlets.size(),1000000000,1,2097152,2621440,utilizationModel,utilizationModel,utilizationModel);
+        	Cloudlet temp = new Cloudlet(cloudlets.size(),1000000000,1,2097152,2621440,
+        			utilizationModel,utilizationModel,utilizationModel);
         	temp.setUserId(broker.getId());
         	cloudlets.add(temp);
         }
